@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+#SBATCH --partition=bgmp        ### Partition (like a queue in PBS)
+#SBATCH --job-name=sort_sam    ### Job Name
+#SBATCH --output=slurm-%j-%x.out         ### File in which to store job output
+#SBATCH --time=0-10:00:00       ### Wall clock time limit in Days-HH:MM:SS
+#SBATCH --nodes=1               ### Number of nodes needed for the job
+#SBATCH --ntasks-per-node=1     ### Number of tasks to be launched per Node
+#SBATCH --account=bgmp      ### Account used for job submission
+#SBATCH --cpus-per-task=1    ### Number of cpus (cores) per task
+
+#http://quinlanlab.org/tutorials/samtools/samtools.html
+#http://www.htslib.org/doc/samtools.html
+
+conda activate bgmp_py3
+module load samtools/1.5
+
+input_sam=""
+output_sam=$(echo $input_sam | cut -d "." -f 1)"_sorted.sam"
+
+/usr/bin/time -v samtools view -S -b -h $input_sam > $(echo $input_sam | cut -d "." -f 1)".bam"
+/usr/bin/time -v samtools sort $(echo $input_sam | cut -d "." -f 1)".bam" -o $(echo $input_sam | cut -d "." -f 1)"_sorted.bam"
+/usr/bin/time -v samtools view -h $(echo $input_sam | cut -d "." -f 1)"_sorted.bam" -o $output_sam
