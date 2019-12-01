@@ -22,4 +22,4 @@ samtools view -S -b -h $input_sam > $(echo $input_sam | cut -d "." -f 1)".bam"
 samtools sort $(echo $input_sam | cut -d "." -f 1)".bam" -o $(echo $input_sam | cut -d "." -f 1)"_sorted.bam"
 samtools view -h $(echo $input_sam | cut -d "." -f 1)"_sorted.bam" -o $output_sam
 
-python3 ./deduper.py --file "/projects/bgmp/sseale/projects/bi624/Deduper/"$output_sam --umi "./STL96.txt"
+python3 ./seale_deduper.py --file "/projects/bgmp/sseale/projects/bi624/Deduper/"$output_sam --umi "./STL96.txt"
