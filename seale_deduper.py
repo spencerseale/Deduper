@@ -2,9 +2,6 @@
 
 import argparse
 import re
-# import sys
-
-#functions
 
 #function to take in user input
 def get_args():
@@ -88,26 +85,10 @@ def pos_adjuster(this_line):
 
 args = get_args()
 
-#help statement
-# if args.help:
-#     print("Due to amplification, a common component of NGS library preparation protocols, duplicate\
-#     DNA fragments are produced in the final library. During sequencing, these duplicates\
-#     will cause a bias in reads of these duplicates that is a product of amplification known\
-#     as PCR bias. In RNA-seq especially, this is a problem when the intention is to compare\
-#     expression of samples and genes as the bias can unnaturally skew this data. Therefore,\
-#     it is necessary to remove this bias after sequencing and prior to analysis.\
-#     \n Currently, this file can only accept single-end sequencing reads.")
-#     sys.exit("Error message")
-
-
 #sam file will be sorted via sort_sam.srun
 umi = args.umi
 input_sam = args.file
 output_sam = input_sam[:len(input_sam)-4]+"_deduped.sam"
-
-#practice files
-# input_sam = "./test.sam"
-# output_sam = "test_input_deduped.sam"
 
 #load umi into a dictionary, this is necessary to check for the umi's in the sam file
 umi_dict = {}
@@ -125,7 +106,6 @@ with open(output_sam, "w") as outsam:
                 parts = line.strip().split("\t")
                 this_line = current_line(line)
                 this_line = pos_adjuster(this_line)
-                #print(this_line)
                 #checking if umi in read is one of the umis used in the experiment
                 if this_line[0] in umi_dict:
                     #checking chromosome of current read and whether this read has been seen before and is pcr duplicate
