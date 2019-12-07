@@ -15,6 +15,12 @@ def get_args():
     #parser.add_argument("-h", "--help", help="Flag to give help message", type=str, required = False)
     return parser.parse_args()
 
+args = get_args()
+
+if args.paired:
+    print("Paired not configured. Please contact @spencerseale and complain.")
+    exit()
+
 def write_read(line, pointer):
     """
     write current read out to specified file using file pointer and current line
@@ -82,8 +88,6 @@ def pos_adjuster(this_line):
             this_line[1] = str(int(this_line[1]) - int(S[0]))
     this_line = tuple(this_line)
     return this_line
-
-args = get_args()
 
 #sam file will be sorted via sort_sam.srun
 umi = args.umi
